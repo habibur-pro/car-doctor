@@ -1,7 +1,7 @@
 
 
 const BookingRow = ({ bookings, booking, setBookings }) => {
-    const { _id, img, cost, date, name, serviceName, customerName } = booking
+    const { _id, img, cost, date, customerName, status } = booking
 
     const handleDeleteBooking = () => {
         const proced = confirm('Are you sure delete this booking?')
@@ -15,13 +15,38 @@ const BookingRow = ({ bookings, booking, setBookings }) => {
                     if (data.deletedCount > 0) {
                         alert('booking is deleted')
                         const remaining = bookings.filter(book => book._id !== _id)
-                        console.log(setBookings)
+
                         setBookings(remaining)
                     }
 
                 })
                 .catch(error => console.log(error))
         }
+    }
+
+
+    const handleBookingConfirm = (id) => {
+
+        const url = `http://localhost:5000/bookings/${id}`
+        console.log(url)
+        fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ status: 'confirm' })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    const remaining = bookings.filter(book => book._id !== id)
+                    const updated = bookings.find(book => book._id === id)
+                    updated.status = "confirm"
+                    const updatedBookings = [...remaining, updated]
+                    setBookings(updatedBookings)
+
+                }
+            })
     }
 
 
@@ -51,7 +76,11 @@ const BookingRow = ({ bookings, booking, setBookings }) => {
             </td>
             <td className="font-bold">{date}</td>
             <th>
-                <button className="btn btn-primary btn-sm px-5 py-2">Pending</button>
+                {
+                    status === 'confirm' ? <button className="text-green-500">Confirmed</button>
+                        :
+                        <button onClick={() => handleBookingConfirm(_id)} className="btn btn-primary btn-sm px-5 py-2">confirm</button>
+                }
             </th>
         </tr>
 
