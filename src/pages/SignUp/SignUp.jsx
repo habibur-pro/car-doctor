@@ -1,13 +1,16 @@
 import { useContext } from 'react';
 import loginImage from '../../assets/images/login/login.svg'
-import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../providers/AuthProvider';
+import SocialLogins from '../shared/SocialLogins/SocialLogins';
 const SignUp = () => {
-    const { signUpWithEmailAndPassword, signInWithGoogle } = useContext(AuthContext)
+    const location = useLocation()
+    const navigate = useNavigate()
+    const { signUpWithEmailAndPassword } = useContext(AuthContext)
+    let from = location.state?.from?.pathname || "/";
 
     const handleSignUp = event => {
+
         event.preventDefault()
         const form = event.target;
         const name = form.name.value;
@@ -17,19 +20,14 @@ const SignUp = () => {
 
         signUpWithEmailAndPassword(email, password)
             .then(result => {
-                console.log(result.user)
+                console.log(result)
+                navigate(from, { replace: true });
             })
             .catch(error => console.log(error))
 
     }
 
-    const handleGoogleSignUp = () => {
-        signInWithGoogle()
-            .then(result => {
-                console.log(result.user)
-            })
-            .catch(error => console.log(error))
-    }
+
 
 
     return (
@@ -50,7 +48,9 @@ const SignUp = () => {
                                     <input type="text"
                                         placeholder="Name"
                                         name='name'
-                                        className="input input-bordered" />
+                                        className="input input-bordered"
+                                        required
+                                    />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
@@ -59,7 +59,9 @@ const SignUp = () => {
                                     <input type="email"
                                         placeholder="email"
                                         name='email'
-                                        className="input input-bordered" />
+                                        className="input input-bordered"
+                                        required
+                                    />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
@@ -69,7 +71,9 @@ const SignUp = () => {
                                         type="password"
                                         placeholder="password"
                                         name='password'
-                                        className="input input-bordered" />
+                                        className="input input-bordered"
+                                        required
+                                    />
                                     <label className="label">
                                         <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                     </label>
@@ -79,12 +83,14 @@ const SignUp = () => {
                                     <button type='submit' className="btn btn-primary">Sign Up</button>
                                 </div>
                             </form>
-                            <p className='text-center mt-3 mb-5'>Or Sign Up With</p>
+
+                            <SocialLogins></SocialLogins>
+                            {/* <p className='text-center mt-3 mb-5'>Or Sign Up With</p>
                             <div className='space-x-7 m-auto'>
                                 <button className='p-3 rounded-full text-blue-400 bg-[#F5F5F8]'><FaFacebookF /></button>
                                 <button className='p-3 rounded-full text-blue-600 bg-[#F5F5F8]'><FaLinkedinIn /></button>
                                 <button onClick={handleGoogleSignUp} className='p-3 rounded-full text-blue-400 bg-[#F5F5F8]'><FcGoogle /></button>
-                            </div>
+                            </div> */}
                             <p className='text-center mt-3 mb-5'>Have An Account?
                                 <Link className='text-primary font-bold ml-2' to='/signin'>Log In</Link>
                             </p>

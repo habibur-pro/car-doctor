@@ -13,15 +13,18 @@ const AuthProvider = ({ children }) => {
 
 
     const signUpWithEmailAndPassword = (email, password) => {
+        setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
     const signInEmailAndPassword = (email, password) => {
+        setLoading(true)
         return signInWithEmailAndPassword(auth, email, password)
     }
 
 
     const signInWithGoogle = () => {
+        setLoading(true)
         return signInWithPopup(auth, googleProvider)
     }
 
@@ -45,7 +48,22 @@ const AuthProvider = ({ children }) => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
 
             setUser(currentUser)
-            setLoading(false)
+
+            console.log('from auth state', currentUser)
+            if (currentUser?.email) {
+                fetch('http://localhost:5000/jwt', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(currentUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        localStorage.setItem('car-access-token', data.token)
+                        setLoading(false)
+                    })
+            }
 
             // console.log(currentUser)
         })

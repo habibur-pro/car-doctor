@@ -6,6 +6,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 const BookService = () => {
     const service = useLoaderData()
     const { user } = useContext(AuthContext)
+    console.log('user from services', user)
 
     const handleBookService = event => {
         event.preventDefault()

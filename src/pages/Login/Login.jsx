@@ -1,13 +1,12 @@
 import { useContext } from 'react';
 import loginImage from '../../assets/images/login/login.svg'
-import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../providers/AuthProvider';
+import SocialLogins from '../shared/SocialLogins/SocialLogins';
 const Login = () => {
     let navigate = useNavigate();
     let location = useLocation();
-    const { signInEmailAndPassword, signInWithGoogle } = useContext(AuthContext)
+    const { signInEmailAndPassword } = useContext(AuthContext)
 
     let from = location.state?.from?.pathname || "/";
 
@@ -21,33 +20,27 @@ const Login = () => {
         signInEmailAndPassword(email, password)
             .then(result => {
                 const user = result.user
-                console.log(user)
-                fetch('http://localhost:5000/jwt', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(user)
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        localStorage.setItem('car-access-token', data.token)
-                        navigate(from, { replace: true });
-                    })
-
-            })
-            .catch(error => console.log(error))
-    }
-
-    const handleGoogleLogin = () => {
-        signInWithGoogle()
-            .then(result => {
-                console.log(result.user)
+                console.log(result)
                 navigate(from, { replace: true });
+                // console.log(user)
+                // fetch('http://localhost:5000/jwt', {
+                //     method: 'POST',
+                //     headers: {
+                //         'content-type': 'application/json'
+                //     },
+                //     body: JSON.stringify(user)
+                // })
+                //     .then(res => res.json())
+                //     .then(data => {
+                //         localStorage.setItem('car-access-token', data.token)
+
+                //     })
+
             })
             .catch(error => console.log(error))
-
     }
+
+
 
 
     return (
@@ -88,12 +81,8 @@ const Login = () => {
                                     <button type='submit' className="btn btn-primary">Login</button>
                                 </div>
                             </form>
-                            <p className='text-center mt-3 mb-5'>Or Sign In With</p>
-                            <div className='space-x-7 m-auto'>
-                                <button className='p-3 rounded-full text-blue-400 bg-[#F5F5F8]'><FaFacebookF /></button>
-                                <button className='p-3 rounded-full text-blue-600 bg-[#F5F5F8]'><FaLinkedinIn /></button>
-                                <button onClick={handleGoogleLogin} className='p-3 rounded-full text-blue-400 bg-[#F5F5F8]'><FcGoogle /></button>
-                            </div>
+
+                            <SocialLogins></SocialLogins>
                             <p className='text-center mt-3 mb-5'>New to Car Doctor?
                                 <Link className='text-primary font-bold ml-2' to='/signup'>Sign Up</Link>
                             </p>
