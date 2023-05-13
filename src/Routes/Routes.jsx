@@ -7,6 +7,7 @@ import SignUp from "../pages/SignUp/SignUp";
 import BookService from "../pages/BookService/BookService";
 import Bookings from "../pages/Bookings/Bookings";
 import PrivetRoute from "../providers/PrivetRoute";
+// import ScrollTop from "../providers/ScrollTop";
 // import Main from "../Layout/Main";
 
 
