@@ -23,7 +23,7 @@ const Login = () => {
                 console.log(result)
                 navigate(from, { replace: true });
                 // console.log(user)
-                // fetch('http://localhost:5000/jwt', {
+                // fetch('https://car-doctor-server-habibur-pro.vercel.app/jwt', {
                 //     method: 'POST',
                 //     headers: {
                 //         'content-type': 'application/json'

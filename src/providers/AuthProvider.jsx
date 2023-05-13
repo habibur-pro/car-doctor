@@ -51,7 +51,7 @@ const AuthProvider = ({ children }) => {
 
             console.log('from auth state', currentUser)
             if (currentUser?.email) {
-                fetch('http://localhost:5000/jwt', {
+                fetch('https://car-doctor-server-habibur-pro.vercel.app/jwt', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

@@ -6,7 +6,7 @@ const BookingRow = ({ bookings, booking, setBookings }) => {
     const handleDeleteBooking = () => {
         const proced = confirm('Are you sure delete this booking?')
         if (proced) {
-            const url = `http://localhost:5000/bookings/${_id}`
+            const url = `https://car-doctor-server-habibur-pro.vercel.app/bookings/${_id}`
             fetch(url, {
                 method: 'DELETE'
             })
@@ -27,7 +27,7 @@ const BookingRow = ({ bookings, booking, setBookings }) => {
 
     const handleBookingConfirm = (id) => {
 
-        const url = `http://localhost:5000/bookings/${id}`
+        const url = `https://car-doctor-server-habibur-pro.vercel.app/bookings/${id}`
         console.log(url)
         fetch(url, {
             method: 'PATCH',

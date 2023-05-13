@@ -7,7 +7,7 @@ const Bookings = () => {
     const { user } = useContext(AuthContext)
 
     const [bookings, setBookings] = useState([])
-    const url = `http://localhost:5000/bookings?email=${user?.email}`
+    const url = `https://car-doctor-server-habibur-pro.vercel.app/bookings?email=${user?.email}`
 
     useEffect(() => {
         fetch(url, {
