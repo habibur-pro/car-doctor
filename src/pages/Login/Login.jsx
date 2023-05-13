@@ -19,7 +19,7 @@ const Login = () => {
 
         signInEmailAndPassword(email, password)
             .then(result => {
-                const user = result.user
+
                 console.log(result)
                 navigate(from, { replace: true });
                 // console.log(user)

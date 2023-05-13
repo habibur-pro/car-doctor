@@ -14,9 +14,9 @@ const SocialLogins = () => {
 
     const handleGoogleLogin = () => {
         signInWithGoogle()
-            .then(result => {
+            .then(() => {
 
-                console.log(result.user)
+
                 navigate(from, { replace: true });
             })
             .catch(error => console.log(error))

@@ -61,10 +61,11 @@ const AuthProvider = ({ children }) => {
                     .then(res => res.json())
                     .then(data => {
                         localStorage.setItem('car-access-token', data.token)
-                        setLoading(false)
+
                     })
             }
-
+            localStorage.removeItem('car-access-token')
+            setLoading(false)
             // console.log(currentUser)
         })
         return () => unSubscribe()
